@@ -1,0 +1,111 @@
+#include <SPI.h>
+#include <Ethernet.h>
+#define RELAY  8 
+int obar;
+int obarc;
+int vanne;
+int vannef;
+int incomingByte = 0;
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x10, 0x7D, 0x2A };
+char server[] = "mv89.prwh.com"; 
+EthernetClient client;
+
+void setup() { 
+ /* Serial.begin(9600);
+  while (!Serial) ;
+ */
+  pinMode(RELAY, OUTPUT);
+  digitalWrite(RELAY,HIGH);
+  Serial.println("DLOMATIK v0.1 (c) Bertrand DEMARCQ");
+ 
+ 
+  //Ethernet.begin(mac);
+   if (Ethernet.begin(mac) == 0) {
+ // Serial.println("Failed to configure Ethernet using DHCP");
+  // try to congifure using IP address instead of DHCP:
+  Ethernet.begin(mac);
+ }
+  delay(1000);
+ 
+ if (client.connect(server, 80)) {
+ //   Serial.println("connected");
+    // Make a HTTP request:
+    client.println("GET /dlo.php HTTP/1.1");
+    client.println("Host: mv89.prwh.com");
+    client.println("Connection: close");
+    client.println();
+      for (int i=0; i <=10; i++){
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+        delay(50);                       // wait for a second
+        digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+        delay(500);  
+   } 
+  } else {
+    // if you didn't get a connection to the server:
+    Serial.println("connection failed");   
+  }
+
+  /*
+  Ethernet.begin(mac, ip, dnServer, gateway, subnet);
+  Serial.print("IP = ");
+  Serial.println(Ethernet.localIP());
+  */
+  obarc=9999;
+  obar=9999;
+  vanne=0;
+  vannef=0;
+//  time_t t = now(); 
+//  println(t);
+}
+
+void loop() {
+  /*int sensorVal = analogRead(A0);
+  float voltage = (sensorVal * 5.0) / 1024.0;
+  float bar = (3.0 * ((float)voltage - 0.47)) * 1000000.0 / 10e5;
+  int barf=round(bar*10);
+  
+   if (Serial.available() > 0) {
+                incomingByte = Serial.read();
+                if (incomingByte==48) {
+                   Serial.print ("Fermeture vanne citerne - ");
+                    Serial.println(bar);
+                    digitalWrite(RELAY,HIGH);  
+                    vanne=0;
+                    vannef=1;
+                }
+                if (incomingByte==49) {
+                   Serial.print ("Fermeture vanne citerne - ");
+                    Serial.println(bar);
+                    digitalWrite(RELAY,HIGH);  
+                    vanne=1;
+                    vannef=1;
+                }
+
+    }
+    if (obar!=barf ) {
+    obar=barf;
+    Serial.println(bar);
+  } 
+  if (bar<0.5) {
+      if ((obarc<0.5) && (vanne==0) && (vannef==0) ) {
+        Serial.print ("Ouverture vanne citerne - ");
+      Serial.println(bar);
+       digitalWrite(RELAY,LOW);  
+        vanne=1; 
+      }
+    obarc=bar;
+  } else { 
+    if ((obarc>=0.5) && (vanne==1)  && (vannef==0)  ) {
+      Serial.print ("Fermeture vanne citerne - ");
+      Serial.println(bar);
+      digitalWrite(RELAY,HIGH);  
+      vanne=0;
+    }
+    obarc=bar;
+  }
+
+  delay(1000);
+  */
+}
+
+
