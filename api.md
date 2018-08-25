@@ -6,7 +6,8 @@ Demandez votre clé à me@bdm.fr
 retourne les valeurs pondérées de l'ensemble des sondes (réservé aux applications autorisées)
 
 /json.php?o=liveall&k=xxxxxxxxxxx
-```javascript
+Retourne :
+```
 {
 	"releve":[
 	{"id":"1","val":"167"}
@@ -19,7 +20,15 @@ retourne les valeurs pondérées de l'ensemble des sondes (réservé aux applica
 retourne la liste de l'ensemble des sondes (réservé aux applications autorisées)
 
 /json.php?o=listall&k=xxxxxxxxxxx
+Retourne :
+```
+{
+	"sondes":[
+	{"id":"1","commune":"SAINT-FRANCOIS","section":"CAYENNE NORD","lat":"16.2564","lon":"-61.2856"}
 
+	]
+}
+```
 
 
  
